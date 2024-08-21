@@ -25,6 +25,11 @@ class Tamara
      */
     private string $currency;
 
+    /**
+     * @var string
+     */
+    private string $locale;
+
 
     public function __construct()
     {
@@ -32,6 +37,7 @@ class Tamara
         $this->token       = config('tamara.token');
         $this->countryCode = config('tamara.country_code');
         $this->currency    = config('tamara.currency');
+        $this->locale    = config('tamara.locale') ?? 'ar_SA';
     }
 
     public function createCheckoutSession($order = [],$products = [],$consumer = [],$billing_address= [],$shipping_address=[],$urls =[])
@@ -50,7 +56,7 @@ class Tamara
             'country_code'       => $this->countryCode,
             'payment_type'       => 'PAY_BY_INSTALMENTS',
             'instalments'        => NULL,
-            'locale'             => 'en_US',
+            'locale'             => $this->locale,
             'items'              => $this->getOrderItems($products),
             'consumer'           =>
                 [
